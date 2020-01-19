@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Menu from './components/Menu'
 import { createMuiTheme, responsiveFontSizes, ThemeProvider, CssBaseline } from '@material-ui/core'
+import Upload from './components/Upload'
+import Edit from './components/Edit'
+import { useSelector } from 'react-redux'
 
 function App() {
     const [paletteMode, setPaletteMode] = useState(0)
@@ -11,6 +14,7 @@ function App() {
             },
         })
     )
+    const file = useSelector((state) => state.imageReducer.image)
 
     const togglePaletteMode = () => {
         setPaletteMode((paletteMode + 1) % 2)
@@ -19,7 +23,7 @@ function App() {
     return <ThemeProvider theme={theme}>
         <CssBaseline />
         <Menu togglePaletteMode={togglePaletteMode} />
-        content
+        {file ? <Edit /> : <Upload />}
     </ThemeProvider>
 }
 
